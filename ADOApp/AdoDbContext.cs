@@ -1,4 +1,4 @@
-﻿using ADOApp.Models;
+﻿using ADOApp.Models1;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;

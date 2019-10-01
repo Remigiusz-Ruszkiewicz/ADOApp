@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ADOApp.Models
+namespace ADOApp.Models1
 {
     public class Model : Entity
     {

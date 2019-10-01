@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-using ADOApp.Models;
+using ADOApp.Models1;
 
 namespace ADOApp
 {
@@ -23,13 +23,14 @@ namespace ADOApp
         }
         private void Button1_Click(object sender, EventArgs e)
         {
-            AdoDbContext context = new AdoDbContext();
+            EfRepository context = new EfRepository();
             dataGridView1.DataSource = context.GetCars();
+            
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            AdoDbContext context = new AdoDbContext();
+            EfRepository context = new EfRepository();
             Car car = new Car
             {
                 Name = tbName.Text,
@@ -62,8 +63,8 @@ namespace ADOApp
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            
-            AdoDbContext context = new AdoDbContext();
+
+            EfRepository context = new EfRepository();
             Car car = new Car
             {
                 Id = id,
@@ -77,7 +78,7 @@ namespace ADOApp
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            AdoDbContext context = new AdoDbContext();
+            EfRepository context = new EfRepository();
             if (context.Delete(id))
             {
                 MessageBox.Show("Usunięto");
