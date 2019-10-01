@@ -12,8 +12,11 @@ using ADOApp.Models;
 
 namespace ADOApp
 {
+    
     public partial class Form1 : Form
-    { 
+    {
+        private int id = 0;
+        private int selectedRow = 0;
         public Form1()
         {
             InitializeComponent();
@@ -22,6 +25,66 @@ namespace ADOApp
         {
             AdoDbContext context = new AdoDbContext();
             dataGridView1.DataSource = context.GetCars();
+        }
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            AdoDbContext context = new AdoDbContext();
+            Car car = new Car
+            {
+                Name = tbName.Text,
+                ModelId = int.Parse(tbModel.Text)
+            };
+
+            int id = context.Add(car);
+            if (id ==0)
+            {
+
+            }
+            MessageBox.Show(id.ToString());
+            dataGridView1.DataSource = context.GetCars();
+        }
+
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            selectedRow = e.RowIndex;
+
+            if (dataGridView1.SelectedRows.Count==0)
+            {
+                btnUpdate.Enabled = false;
+                return;
+            }
+            btnUpdate.Enabled = true;
+            id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[1].Value);
+            tbName.Text = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+            tbModel.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+        }
+
+        private void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            
+            AdoDbContext context = new AdoDbContext();
+            Car car = new Car
+            {
+                Id = id,
+                Name = tbName.Text,
+                ModelId = int.Parse(tbModel.Text)
+            };
+            MessageBox.Show(context.Update(car).ToString());
+            dataGridView1.DataSource = context.GetCars();
+            dataGridView1.Rows[selectedRow].Selected = true;
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            AdoDbContext context = new AdoDbContext();
+            if (context.Delete(id))
+            {
+                MessageBox.Show("Usunięto");
+                dataGridView1.DataSource = context.GetCars();
+                tbModel.Text = "";
+                tbName.Text = "";
+            }
         }
     }
 }
